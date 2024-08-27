@@ -1,0 +1,48 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    direction: rtl;
+    margin: 0 auto;
+    padding: 10px;
+
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+main{
+    text-align: center;
+margin: 0 auto;}
+
+.answer{
+    font-size: 3rem;
+    background-color: red;
+    margin: 2rem;
+    /* position: relative; */
+}
+
+.answer-char{
+    
+}
+
+.line{
+    margin: 2rem;
+    display: block;
+    border: 2px solid blue;
+}
+
+#a{
+    height: 20px;
+    width: 2px;
+    background-color: rebeccapurple;
+    display: block;
+transform: translateX(100deg);
+}
