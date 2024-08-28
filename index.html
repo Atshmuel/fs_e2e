@@ -10,54 +10,78 @@
 <body>
     <header>
         <div id="best-game-info">
-            <p>
-                Best Score: 
+            <span>
+                הניקוד הגבוהה ביותר: 
                 <span id="best-score">340</span>
-            </p>
-            <p>
-                By: 
-                <span id="best-score-player">Nerya Levi</span>
-            </p>
+            </span>
+            <span>
+                שם השחקן:
+                <span id="best-player">נריה לוי</span>
+            </span>
         </div>
-        <h1>
-            The Quiz Game
-        </h1>
+
+     <h1>החידון המהיר</h1>
+
         <div id="current-game-info">
-            <p>Score:
-                <span id="score">100</span>
+            <p>כעט משחק: 
+                <span id="curr-player">שמואל עטר</span>
             </p>
-            <p>Player Name: 
-                <span id="player-name">Shmuel Atar</span>
+            <p>ניקוד:
+                <span id="curr-score">100</span>
             </p>
         </div>
     </header>
     <main>
-        <h2>Question: 
-            <span id="quesstion">whats the name of mor</span>
+        <h2 id="question-title">
+            שאלה 
+            <span id="quesstion-number">1</span>:
+            <span id="quesstion">מה השם של מור</span>
         </h2>
-        <div>
-            <p class="answer">
-                    <span class="line"></span>
-                    <span class="line"></span>
-                    <span class="line"></span>
-                    <span class="line"></span>
-
-
-                    <span class="answer-char">A</span>
-                    <span class="answers" id="answer-1">mor</span>
-                </p>
-            <p class="answer">
-                <span class="answers" id="answer-2">avi</span>
-            </p>
-            <p class="answer">
-                <span class="answers" id="answer-3">nerya</span>
-            </p>
-            <p class="answer">
-                <span class="answers" id="question-4">adva</span>
-            </p>
+        <div id="all-answers">
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        א
+                    </h2>
+                </div>
+                    <span id="answer-1" class="answers">
+                        תשובה לשאלה היא תשובה
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ב
+                    </h2>
+                </div>
+                    <span id="answer-2" class="answers">
+                        תשובה לשאלה היא תשובה ב
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ג
+                    </h2>
+                </div>
+                    <span id="answer-3" class="answers">
+                        תשובה לשאלה היא תשובה ג
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ד
+                    </h2>
+                </div>
+                    <span id="answer-4" class="answers">
+                        תשובה לשאלה היא תשובה ד
+                    </span>
+            </div>
         </div>
     </main>
-    <footer></footer>
-    <span id="a"></span>
+    <footer>
+        זמן שנותר: <span id="timer">01:04:03</span>
+    </footer>
 </body>
 </html>
