@@ -3,10 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Quit Game</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
 <body>
+    <header>
+        <div id="best-game-info">
+            <span>
+                הניקוד הגבוהה ביותר: 
+                <span id="best-score">340</span>
+            </span>
+            <span>
+                שם השחקן:
+                <span id="best-player">נריה לוי</span>
+            </span>
+        </div>
+
+     <h1>החידון המהיר</h1>
+
+        <div id="current-game-info">
+            <p>כעט משחק: 
+                <span id="curr-player">שמואל עטר</span>
+            </p>
+            <p>ניקוד:
+                <span id="curr-score">100</span>
+            </p>
+        </div>
+    </header>
+    <main>
+        <h2 id="question-title">
+            שאלה 
+            <span id="quesstion-number">1</span>:
+            <span id="quesstion">מה השם של מור</span>
+        </h2>
+        <div id="all-answers">
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        א
+                    </h2>
+                </div>
+                    <span id="answer-1" class="answers">
+                        תשובה לשאלה היא תשובה
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ב
+                    </h2>
+                </div>
+                    <span id="answer-2" class="answers">
+                        תשובה לשאלה היא תשובה ב
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ג
+                    </h2>
+                </div>
+                    <span id="answer-3" class="answers">
+                        תשובה לשאלה היא תשובה ג
+                    </span>
+            </div>
+            <div class="answer-container">
+                <div class="square">
+                    <h2 class="answer-char">
+                        ד
+                    </h2>
+                </div>
+                    <span id="answer-4" class="answers">
+                        תשובה לשאלה היא תשובה ד
+                    </span>
+            </div>
+        </div>
+    </main>
+    <footer>
+        זמן שנותר: <span id="timer">01:04:03</span>
+    </footer>
 </body>
 </html>
