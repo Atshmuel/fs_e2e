@@ -9,6 +9,7 @@ body{
     padding: 10px;
     background-color: #222831;
     color: #EEEEEE;
+    position: relative;
 }
 
 header{
@@ -39,7 +40,7 @@ main{
     flex-wrap: wrap;
     justify-content: center;
     padding: 1rem;
-    gap: 4rem;
+    gap: 3rem;
 }
 
 .answer-container{
@@ -87,7 +88,7 @@ main{
 }
 
 footer{
-    margin-top: 19rem;
+    margin-top: 5rem;
     text-align: center;
     font-size: 1.7rem;
 }
@@ -99,6 +100,73 @@ footer{
 .low-time{
     animation: bounce 2s linear infinite;
 
+}
+#dialog-container{
+     height: 100dvh; 
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(1rem);
+    z-index: 10;
+    width: 100%; 
+    position: absolute;
+}
+dialog{
+    color: #EEEEEE;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: inherit;
+    text-align: center;
+    border-radius: 10px;
+}
+dialog h3{
+    letter-spacing: 4px;
+    font-size: 1.5rem;
+    margin-bottom: 1.4rem;
+}
+dialog > div{
+width: fit-content;
+gap: 2rem;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+    #dialog-btn{
+        border: 1px solid blue;
+        border-radius: 10px;
+        color: #EEEEEE;
+        font-size: 1rem;
+        font-weight: 600;
+        background: none;
+        cursor: pointer;
+        margin: 0;
+        padding: 1.4rem 1rem;
+        transition: 1s;
+
+    }
+    #dialog-btn:hover{
+        transform: scale(1.1);
+        transition: .5s;
+    }
+.btn-icon{
+    height: 3rem;
+    width: 3rem;
+    background-color: red;
+    text-align: center;
+    align-content: center;
+    border-radius: 50%;
+}
+#blue{
+    background-color: blue;}
+#red{
+    background-color: red;}
+#green{
+    background-color: green;
+}
+#yellow{
+    background-color: rgb(194, 181, 0);
 }
 
 @media only screen and (max-width: 1395px) {

@@ -363,16 +363,17 @@ const allQuestionArr = [
 
 const initialState = {
     gameState: 'init',
-    time: 60,
+    time: 2,
     questionCnt: 1,
+    corrAnswersCnt: 0,
     name: getBestPlayer().name,
     score: getBestPlayer().score
 }
 
 
 // localStorage.setItem('games-info', JSON.stringify([{ player: 'שמואל', score: 200 }, { player: 'אבי', score: 100 }, { player: 'נתי', score: 300 }, { player: 'אלי', score: 200 }, { player: 'חיים', score: 420 }, { player: 'שלי', score: 200 }]))
-document.addEventListener('keydown', handleKeyDown)
 
+document.addEventListener('keydown', handleKeyDown)
 function setLocalStorage(keyName, data) {
     localStorage.setItem(keyName, JSON.stringify(data));
 }
@@ -402,10 +403,15 @@ const allAnswersContainers = getAllByClass('answer-container')
 
 const timer = getById('timer')
 
+const modal = getById('dialog')
+const modalContainer = getById('dialog-container')
+
+
+
 
 function getBestPlayer() {
     let score = 0
-    let name = ""
+    let name = "-"
     const gamesInfo = getLocalStorage('games-info')
     if (!gamesInfo) return { name, score }
     gamesInfo.map((el) => {
@@ -417,29 +423,42 @@ function getBestPlayer() {
     }
     )
     return { name, score }
-
 }
+
 function startGame() {
-    // showBestGame();
+    showBestGame();
     currPlayerEl.innerText = "ישראל ישראלי"
     currScoreEl.innerText = 0
+    initialState.gameState = 'running'
 
+    countDown()
 }
+
+
+
 function toggleTimeAlert() {
     timer.classList.toggle('low-time')
 }
-function updateCounter() {
-    questionCnt++;
+
+
+
+function updateCounter(reset) {
+    reset ? initialState.questionCnt = 0 : initialState.questionCnt++;
 }
 function clearCorrectAnswers() {
     allAnswersContainers.forEach((answer, i) => {
         allSquaresEl[i].classList.remove('correct')
         allAnswersContainers[i].classList.remove('correct-answer')
-
     })
 }
+
 function handleKeyDown(e) {
     switch (e.key) {
+        case 'a' && 'b':
+            if (initialState.gameState !== 'init') return
+            modalContainer.remove()
+            startGame()
+            break;
         case 'a':
             console.log(e.key)
             break;
@@ -457,17 +476,19 @@ function handleKeyDown(e) {
     }
 
 }
+
 function checkCorrect(correctAnswer, answersArr) {
     const corrAnswerIndex = answersArr.indexOf(correctAnswer)
+    initialState.corrAnswersCnt++;
     allSquaresEl[corrAnswerIndex].classList.add('correct')
     allAnswersContainers[corrAnswerIndex].classList.add('correct-answer')
-
 }
 
 function showBestGame() {
     bestPlayerEl.innerHTML = initialState.name
     bestScoreEl.innerHTML = initialState.score
 }
+
 function handleQuestionChange(questionObj, questionNum) {
     const { question, options, correct_answer } = questionObj[questionNum]
     questionEl.innerText = question
@@ -475,8 +496,63 @@ function handleQuestionChange(questionObj, questionNum) {
     questionNumEl.innerHTML = questionNum - 1
 }
 
+function countDown() {
+    let lowerThenTen
+    if (initialState.gameState === 'running') {
+        const timeHandler = setInterval(() => {
+            let min = Math.floor(initialState.time / 60)
+            let sec = (initialState.time % 60)
+
+            timer.innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`
+            if (initialState.time <= 10 && !lowerThenTen) {
+                toggleTimeAlert()
+                lowerThenTen = true
+            }
+            if (!min && !sec && initialState.gameState !== 'end-game') {
+                clearInterval(timeHandler)
+                resetGame()
+            }
+            else {
+                initialState.time--;
+            }
+        }, 1000)
+    }
+}
+
+
+function resetGame() {
+    timer.innerText = "נגמר הזמן !"
+    initialState.gameState = 'end-game'
+    initialState.corrAnswersCnt = 0;
+    initialState.gameState = 'init';
+    initialState.name = ""
+    initialState.score = 0
+    initialState.time = 90;
+    updateCounter(true)
+
+
+
+}
+
 // handleQuestionChange(allQuestionArr, questionCnt)
 // startGame()
 // checkCorrect(allQuestionArr[0].correct_answer, allQuestionArr[0].options)
 // clearCorrectAnswers()
 
+
+
+
+function modalHandler() {
+    const modalElement = `
+                    <div id="dialog-container">
+                        <dialog id="dialog" open>
+                        <h3>המשחק נגמר</h3>
+                        <p>הצלחת לענות על ${corrAnswersCnt} מתוך ${initialState.questionCnt}</p>
+                        <p>כל הכבוד ${initialState.name}, הצלחת לצבור ${initialState.score}</p>
+                        <button id="dialog-btn" onclick="resetGame">שחק שוב</button>
+                        </dialog>
+                        </div>
+                        `
+
+    document.body.insertAdjacentHTML("beforebegin", modalElement)
+}

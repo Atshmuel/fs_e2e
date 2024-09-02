@@ -8,6 +8,23 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+    <div id="dialog-container">
+        <dialog id="dialog" open>
+            <h3>ברוכים הבאים לחידון מהיר</h3>
+            <p>חוקי המשחק פשוטים מאוד</p>
+            <p>כל מה שצריך לעשות הוא לענות על כמה יותר שאלות כמה שיותר מהר</p>
+            <p>על מנת לענות על תשובה יש ללחוץ על הכפתור עם הצבע המתאים</p>
+            <div>
+                <p class="btn-icon" id="blue">א</p>
+                <p class="btn-icon" id="green">ב</p>
+                <p class="btn-icon" id="red">ג</p>
+                <p class="btn-icon" id="yellow">ד</p>
+            </div>
+            <button id="dialog-btn">לחץ על הכפתור הכחול כדי להתחיל</button>
+        </dialog>
+    </div>
+
+    
     <header>
         <div class="game-info">
             <span>
@@ -79,7 +96,7 @@
         </div>
     </main>
     <footer>
-        זמן שנותר: <span id="timer">01:04:03</span>
+        זמן שנותר: <span id="timer">01:30</span>
     </footer>
 </body>
 </html>
