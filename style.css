@@ -27,7 +27,7 @@ header{
 main{
     
     text-align: center;
-    margin: 8rem auto 0 auto;
+    margin: 8rem 0;
 }
 #question-title{
     font-size: 2rem;
@@ -35,10 +35,8 @@ main{
 
 #all-answers{
     margin-top: 3rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
     padding: 1rem;
     gap: 3rem;
 }
@@ -47,9 +45,9 @@ main{
     cursor: pointer;
     position: relative;
     border: 2px solid #00ADB5;
-    width: 90%;
     line-height: 4rem;
     font-size: 1.6rem;
+    margin-right: 1.5rem;
 
 }
 
@@ -78,11 +76,13 @@ main{
     transform: rotateZ(0);
 }
 
-
+.wrong{
+    animation: wrong 400ms ease-in forwards;
+}
 .correct > h2{
     transform: rotateZ(0);
 }
-.correct-answer,.correct{
+.correct-answer{
     animation: correct 400ms ease-in forwards;
 
 }
@@ -158,15 +158,15 @@ gap: 2rem;
     align-content: center;
     border-radius: 50%;
 }
-#blue{
-    background-color: blue;}
-#red{
-    background-color: red;}
-#green{
-    background-color: green;
+.blue{
+    background-color: rgb(47, 110, 248);}
+.red{
+    background-color: rgb(210, 46, 46);}
+.green{
+    background-color: rgb(19, 213, 19);
 }
-#yellow{
-    background-color: rgb(194, 181, 0);
+.yellow{
+    background-color: rgb(179, 182, 15);
 }
 
 @media only screen and (max-width: 1395px) {
@@ -174,6 +174,7 @@ gap: 2rem;
         margin-top: 7rem;
     }
     #all-answers{
+        grid-template-columns: repeat(1,1fr);
         margin-top: 3rem;
     }
 footer{
@@ -220,6 +221,15 @@ footer{
     }
     100%{
         background-color:green;
+    }   
+}
+
+@keyframes wrong {
+    0%{
+        background-color: #222831;
+    }
+    100%{
+        background-color:red;
     }   
 }
 

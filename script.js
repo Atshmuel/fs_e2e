@@ -363,32 +363,38 @@ const allQuestionArr = [
 
 const initialState = {
     gameState: 'init',
-    time: 2,
+    time: 15,
     questionCnt: 1,
     corrAnswersCnt: 0,
-    name: getBestPlayer().name,
-    score: getBestPlayer().score
+    name: "",
+    score: getBestPlayer(),
+    questionData: {},
 }
 
 
-// localStorage.setItem('games-info', JSON.stringify([{ player: 'שמואל', score: 200 }, { player: 'אבי', score: 100 }, { player: 'נתי', score: 300 }, { player: 'אלי', score: 200 }, { player: 'חיים', score: 420 }, { player: 'שלי', score: 200 }]))
+function shuffleQuestions() {
+    for (let i = allQuestionArr.length - 1; i > 0; i--) {
+        let rnd = Math.floor(Math.random() * (i + 1))
+        let temp = allQuestionArr[i]
+        allQuestionArr[i] = allQuestionArr[rnd]
+        allQuestionArr[rnd] = temp
+    }
+}
 
 document.addEventListener('keydown', handleKeyDown)
+
 function setLocalStorage(keyName, data) {
     localStorage.setItem(keyName, JSON.stringify(data));
 }
 function getLocalStorage(keyName) {
     return JSON.parse(localStorage.getItem(keyName))
 }
-
-
 function getById(elId) {
     return document.getElementById(elId)
 }
 function getAllByClass(className) {
     return document.querySelectorAll(`.${className}`)
 }
-
 
 const bestScoreEl = getById('best-score');
 const bestPlayerEl = getById('best-player');
@@ -406,14 +412,11 @@ const timer = getById('timer')
 const modal = getById('dialog')
 const modalContainer = getById('dialog-container')
 
-
-
-
 function getBestPlayer() {
     let score = 0
     let name = "-"
     const gamesInfo = getLocalStorage('games-info')
-    if (!gamesInfo) return { name, score }
+    if (!gamesInfo) return score
     gamesInfo.map((el) => {
         let temp = score
         score = Math.max(score, el.score)
@@ -422,16 +425,24 @@ function getBestPlayer() {
         }
     }
     )
-    return { name, score }
+    return score
 }
 
+function getQ(i) {
+    return allQuestionArr[i - 1]
+}
+
+
 function startGame() {
+    shuffleQuestions()
+    initialState.questionData = getQ(initialState.questionCnt)
     showBestGame();
     currPlayerEl.innerText = "ישראל ישראלי"
     currScoreEl.innerText = 0
     initialState.gameState = 'running'
-
+    modalContainer.remove()
     countDown()
+
 }
 
 
@@ -451,25 +462,27 @@ function clearCorrectAnswers() {
         allAnswersContainers[i].classList.remove('correct-answer')
     })
 }
-
+startGame()
 function handleKeyDown(e) {
     switch (e.key) {
-        case 'a' && 'b':
-            if (initialState.gameState !== 'init') return
-            modalContainer.remove()
-            startGame()
-            break;
+
+
+        // case 'a' && 'b':
+        //     if (initialState.gameState !== 'init') return
+        // modalContainer.remove()
+        // startGame()
+        // break;
         case 'a':
-            console.log(e.key)
+            checkAnswer(0)
             break;
         case 'b':
-            console.log(e.key)
+            checkAnswer(1)
             break;
         case 'c':
-            console.log(e.key)
+            checkAnswer(2)
             break;
         case 'd':
-            console.log(e.key)
+            checkAnswer(3)
             break;
         default:
             break;
@@ -477,11 +490,29 @@ function handleKeyDown(e) {
 
 }
 
-function checkCorrect(correctAnswer, answersArr) {
-    const corrAnswerIndex = answersArr.indexOf(correctAnswer)
-    initialState.corrAnswersCnt++;
-    allSquaresEl[corrAnswerIndex].classList.add('correct')
-    allAnswersContainers[corrAnswerIndex].classList.add('correct-answer')
+
+
+
+
+
+function checkAnswer(pressedBtnNum) {
+    let isCorr = false
+    if (initialState.questionData.options[pressedBtnNum] === initialState.questionData.correct_answer) {
+        initialState.questionCnt++;
+        initialState.corrAnswersCnt++;
+        initialState.score += 10;
+        isCorr = true;
+        initialState.questionData = getQ(initialState.questionCnt)
+        console.log(initialState.questionData);
+
+        allSquaresEl[pressedBtnNum].classList.add('correct')
+        allAnswersContainers[pressedBtnNum].classList.add('correct-answer')
+    } else {
+        initialState.questionCnt++
+        allAnswersContainers[pressedBtnNum].classList.add('wrong')
+    }
+    // updateUi(pressedBtnNum, isCorr)
+
 }
 
 function showBestGame() {
@@ -492,8 +523,12 @@ function showBestGame() {
 function handleQuestionChange(questionObj, questionNum) {
     const { question, options, correct_answer } = questionObj[questionNum]
     questionEl.innerText = question
-    allAnswersEl.forEach((answer, i) => answer.innerHTML = options[i])
-    questionNumEl.innerHTML = questionNum - 1
+    allAnswersEl.forEach((answer, i) => {
+        answer.innerHTML = options[i]
+
+    })
+
+    questionNumEl.innerHTML = questionNum
 }
 
 function countDown() {
@@ -532,14 +567,13 @@ function resetGame() {
 
 
 
+
 }
 
-// handleQuestionChange(allQuestionArr, questionCnt)
+// handleQuestionChange(allQuestionArr, initialState.questionCnt);
 // startGame()
-// checkCorrect(allQuestionArr[0].correct_answer, allQuestionArr[0].options)
+// checkAnswer(allQuestionArr[0].correct_answer, allQuestionArr[0].options)
 // clearCorrectAnswers()
-
-
 
 
 function modalHandler() {
@@ -547,7 +581,7 @@ function modalHandler() {
                     <div id="dialog-container">
                         <dialog id="dialog" open>
                         <h3>המשחק נגמר</h3>
-                        <p>הצלחת לענות על ${corrAnswersCnt} מתוך ${initialState.questionCnt}</p>
+                        <p>הצלחת לענות על ${"corrAnswersCnt"} מתוך ${initialState.questionCnt}</p>
                         <p>כל הכבוד ${initialState.name}, הצלחת לצבור ${initialState.score}</p>
                         <button id="dialog-btn" onclick="resetGame">שחק שוב</button>
                         </dialog>
