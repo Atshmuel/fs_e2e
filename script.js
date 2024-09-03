@@ -381,8 +381,6 @@ function shuffleQuestions() {
     }
 }
 
-document.addEventListener('keydown', handleKeyDown)
-
 function setLocalStorage(keyName, data) {
     localStorage.setItem(keyName, JSON.stringify(data));
 }
@@ -395,78 +393,26 @@ function getById(elId) {
 function getAllByClass(className) {
     return document.querySelectorAll(`.${className}`)
 }
-
-const bestScoreEl = getById('best-score');
-const bestPlayerEl = getById('best-player');
-const currPlayerEl = getById('curr-player')
-const currScoreEl = getById('curr-score')
-
-const questionEl = getById('question')
-const questionNumEl = getById('question-number')
-const allAnswersEl = getAllByClass('answers')
-const allSquaresEl = getAllByClass('square')
-const allAnswersContainers = getAllByClass('answer-container')
-
-const timer = getById('timer')
-
-const modal = getById('dialog')
-const modalContainer = getById('dialog-container')
-
 function getBestPlayer() {
-    let score = 0
-    let name = "-"
+    let bScore = 0
     const gamesInfo = getLocalStorage('games-info')
-    if (!gamesInfo) return score
-    gamesInfo.map((el) => {
-        let temp = score
-        score = Math.max(score, el.score)
-        if (temp !== score) {
-            name = el.player
+    if (!gamesInfo) return bScore
+        gamesInfo.map((el) => {
+            bScore = Math.max(bScore, el.score)
         }
-    }
     )
-    return score
+    return bScore
 }
-
-function getQ(i) {
-    return allQuestionArr[i - 1]
-}
-
-
-function startGame() {
-    shuffleQuestions()
-    initialState.questionData = getQ(initialState.questionCnt)
-    showBestGame();
-    currPlayerEl.innerText = "ישראל ישראלי"
-    currScoreEl.innerText = 0
-    initialState.gameState = 'running'
-    modalContainer.remove()
-    countDown()
-
-}
-
-
 
 function toggleTimeAlert() {
     timer.classList.toggle('low-time')
 }
 
-
-
-function updateCounter(reset) {
-    reset ? initialState.questionCnt = 0 : initialState.questionCnt++;
+function getQuestion(num){
+    return allQuestion[num-1];
 }
-function clearCorrectAnswers() {
-    allAnswersContainers.forEach((answer, i) => {
-        allSquaresEl[i].classList.remove('correct')
-        allAnswersContainers[i].classList.remove('correct-answer')
-    })
-}
-startGame()
 function handleKeyDown(e) {
     switch (e.key) {
-
-
         // case 'a' && 'b':
         //     if (initialState.gameState !== 'init') return
         // modalContainer.remove()
@@ -489,12 +435,6 @@ function handleKeyDown(e) {
     }
 
 }
-
-
-
-
-
-
 function checkAnswer(pressedBtnNum) {
     let isCorr = false
     if (initialState.questionData.options[pressedBtnNum] === initialState.questionData.correct_answer) {
@@ -502,7 +442,7 @@ function checkAnswer(pressedBtnNum) {
         initialState.corrAnswersCnt++;
         initialState.score += 10;
         isCorr = true;
-        initialState.questionData = getQ(initialState.questionCnt)
+        initialState.questionData = getQuestion(initialState.questionCnt)
         console.log(initialState.questionData);
 
         allSquaresEl[pressedBtnNum].classList.add('correct')
@@ -514,23 +454,6 @@ function checkAnswer(pressedBtnNum) {
     // updateUi(pressedBtnNum, isCorr)
 
 }
-
-function showBestGame() {
-    bestPlayerEl.innerHTML = initialState.name
-    bestScoreEl.innerHTML = initialState.score
-}
-
-function handleQuestionChange(questionObj, questionNum) {
-    const { question, options, correct_answer } = questionObj[questionNum]
-    questionEl.innerText = question
-    allAnswersEl.forEach((answer, i) => {
-        answer.innerHTML = options[i]
-
-    })
-
-    questionNumEl.innerHTML = questionNum
-}
-
 function countDown() {
     let lowerThenTen
     if (initialState.gameState === 'running') {
@@ -545,7 +468,7 @@ function countDown() {
             }
             if (!min && !sec && initialState.gameState !== 'end-game') {
                 clearInterval(timeHandler)
-                resetGame()
+               //Need to reset game
             }
             else {
                 initialState.time--;
@@ -554,29 +477,7 @@ function countDown() {
     }
 }
 
-
-function resetGame() {
-    timer.innerText = "נגמר הזמן !"
-    initialState.gameState = 'end-game'
-    initialState.corrAnswersCnt = 0;
-    initialState.gameState = 'init';
-    initialState.name = ""
-    initialState.score = 0
-    initialState.time = 90;
-    updateCounter(true)
-
-
-
-
-}
-
-// handleQuestionChange(allQuestionArr, initialState.questionCnt);
-// startGame()
-// checkAnswer(allQuestionArr[0].correct_answer, allQuestionArr[0].options)
-// clearCorrectAnswers()
-
-
-function modalHandler() {
+function endGameModal() {
     const modalElement = `
                     <div id="dialog-container">
                         <dialog id="dialog" open>
@@ -590,3 +491,149 @@ function modalHandler() {
 
     document.body.insertAdjacentHTML("beforebegin", modalElement)
 }
+
+document.addEventListener('keydown', handleKeyDown)
+
+const bestScoreEl = getById('best-score');
+const bestPlayerEl = getById('best-player');
+const currPlayerEl = getById('curr-player')
+const currScoreEl = getById('curr-score')
+
+const questionEl = getById('question')
+const questionNumEl = getById('question-number')
+const allAnswersEl = getAllByClass('answers')
+const allSquaresEl = getAllByClass('square')
+const allAnswersContainers = getAllByClass('answer-container')
+
+const timer = getById('timer')
+
+const modal = getById('dialog')
+const modalContainer = getById('dialog-container')
+
+
+
+// function startGame() {
+//     shuffleQuestions()
+    initialState.questionData = getQuestion(initialState.questionCnt)
+//     showBestGame();
+//     currPlayerEl.innerText = "ישראל ישראלי"
+//     currScoreEl.innerText = 0
+//     initialState.gameState = 'running'
+//     modalContainer.remove()
+//     countDown()
+
+// }
+
+
+function startGame(){
+//const myTimeout = setTimeout(Times_Up, 5000);
+score=-1;
+questionNum=0;
+}
+
+
+function endGame(){
+if(score==questionNum){
+    fullVictory();
+} else if (score>=(questionNum/2)){
+    halfVictory();
+} else if (score>0 && score<(questionNum/2)){
+    lowVictory();
+} else if (score==0){
+    lose();
+}
+}
+
+
+function fullVictory(){
+    document.getElementById("announcmentOfScore").innerHTML="כל הכבוד! הצלחתם לענות על כל השאלות"
+}
+function halfVictory(){
+    document.getElementById("announcmentOfScore").innerHTML="יפה מאוד! ההבנה שלכם בטריוויה מרשימה"
+}
+function lowVictory(){
+    document.getElementById("announcmentOfScore").innerHTML="לא רע, יש מקום לשיפור"
+}
+function lose(){
+    document.getElementById("announcmentOfScore").innerHTML="אין נקודות, אולי תצליחו יותר בפעם הבאה"
+}
+
+
+
+if("a"==0 && "b"==0){
+//document.getElementById("").addEventListener("click",startGame);
+endGame();
+}
+
+
+
+
+
+
+
+
+let rightAnswer=true;
+function handleAnswer(){
+    if(rightAnswer===true){
+        initialState.questionCnt++;
+        initialState.corrAnswerCnt++;
+        initialState.score+=10;
+    } else {
+        initialState.questionCnt++;
+        //initialState.score-=10;
+    }
+}
+
+function updateUi(pressedNum,isCorrect){
+    if(isCorrect){
+        allSquaresEl[pressedNum].classList.remove('correct');
+        allAnswerContainers[pressedBtnNum].classList.remove('correct-answer')
+    } else {
+        //allSquaresEl[pressedNum].classList.remove('wrong');
+        allAnswerContainers[pressedBtnNum].classList.remove('wrong')
+    }
+    document.getElementById("curr-score").innerHTML=initialState.score;
+    document.getElementById("quesstion-number").innerHTML=initialState.questionCnt;
+}
+
+
+
+
+
+function noPoint(){
+    if(score==-1){
+        score++;
+    }
+    questionNum++;
+    document.getElementById("curr-score").innerHTML=score;
+    document.getElementById("quesstion-number").innerHTML=questionNum;
+    if(questionNum==11){
+        document.getElementById("quesstion-number").innerHTML="";
+        showAnnouncment();
+        startGame();
+    } else {
+        document.getElementById("announcmentOfScore").innerHTML="";
+    }
+}
+
+function showAnnouncment(){
+if(score==10){
+    fullVictory();
+    //startGame();
+} 
+else if (score>=5 && score<10){
+    halfVictory();
+} 
+else if (score>0 && score<5){
+    lowVictory();
+} 
+else if (score==0){
+    lose();
+}
+}
+
+/*const myTimeout = setTimeout(Times_Up, 5000);
+
+function Times_Up() {
+  showAnnouncment();
+}*/
