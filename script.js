@@ -440,16 +440,6 @@ const allQuestionArr = [
         "correct_answer": "פרסית"
     },
     {
-        "question": "מהי המסה של האלקטרון?",
-        "options": [
-            "9.1×10⁻³¹ ק״ג",
-            "1.6×10⁻¹⁹ ק״ג",
-            "3.0×10⁻¹⁰ ק״ג",
-            "7.4×10⁻²⁸ ק״ג"
-        ],
-        "correct_answer": "9.1×10⁻³¹ ק״ג"
-    },
-    {
         "question": "מהי המדינה הדרומית ביותר בעולם?",
         "options": [
             "אוסטרליה",
@@ -510,16 +500,6 @@ const allQuestionArr = [
         "correct_answer": "365"
     },
     {
-        "question": "מי נבחר לנשיא הראשון של מדינת ישראל?",
-        "options": [
-            "חיים ויצמן",
-            "דוד בן-גוריון",
-            "יצחק רבין",
-            "מנחם בגין"
-        ],
-        "correct_answer": "חיים ויצמן"
-    },
-    {
         "question": "באיזו שנה הוקם האינטרנט?",
         "options": [
             "1989",
@@ -560,16 +540,6 @@ const allQuestionArr = [
         "correct_answer": "יריחו"
     },
     {
-        "question": "מהו ההר הגבוה ביותר בישראל?",
-        "options": [
-            "הר תבור",
-            "הר סיני",
-            "הר חרמון",
-            "הר מירון"
-        ],
-        "correct_answer": "הר חרמון"
-    },
-    {
         "question": "מהי העיר הראשונה שהוקמה בישראל לאחר קום המדינה?",
         "options": [
             "אשדוד",
@@ -578,26 +548,6 @@ const allQuestionArr = [
             "אילת"
         ],
         "correct_answer": "אשדוד"
-    },
-    {
-        "question": "כמה ימים נמשכה מלחמת ששת הימים?",
-        "options": [
-            "7 ימים",
-            "6 ימים",
-            "10 ימים",
-            "5 ימים"
-        ],
-        "correct_answer": "6 ימים"
-    },
-    {
-        "question": "מהו הנהר הארוך ביותר בישראל?",
-        "options": [
-            "הירדן",
-            "הקישון",
-            "הבשור",
-            "הירקון"
-        ],
-        "correct_answer": "הירדן"
     },
     {
         "question": "איזה אגם נמצא בצפון ישראל?",
@@ -758,20 +708,120 @@ const allQuestionArr = [
             "הספרייה המרכזית ע״ש לוי אשכול"
         ],
         "correct_answer": "הספרייה המרכזית ע״ש אריק איינשטיין"
+    },
+    {
+        "question": "מהו צבע הדם של בני אדם?",
+        "options": ["אדום", "כחול", "ירוק", "צהוב"],
+        "correct_answer": "אדום"
+    },
+    {
+        "question": "מהי השפה המדוברת ביותר בעולם?",
+        "options": ["אנגלית", "ספרדית", "סינית", "צרפתית"],
+        "correct_answer": "סינית"
+    },
+    {
+        "question": "מי היה אלברט איינשטיין?",
+        "options": ["פיזיקאי", "משורר", "מוזיקאי", "צייר"],
+        "correct_answer": "פיזיקאי"
+    },
+    {
+        "question": "כמה ימים יש בשבוע?",
+        "options": ["5", "6", "7", "8"],
+        "correct_answer": "7"
+    },
+    {
+        "question": "באיזו יבשת נמצאת מדינת ישראל?",
+        "options": ["אירופה", "אפריקה", "אסיה", "אמריקה"],
+        "correct_answer": "אסיה"
+    },
+    {
+        "question": "איזה פרי הוא הכתום ביותר?",
+        "options": ["בננה", "תפוז", "תפוח", "אבטיח"],
+        "correct_answer": "תפוז"
+    },
+    {
+        "question": "מהי המדינה הגדולה ביותר בעולם בשטח?",
+        "options": ["רוסיה", "סין", "ארצות הברית", "קנדה"],
+        "correct_answer": "רוסיה"
+    },
+    {
+        "question": "מהו הגוף השמיימי הקרוב ביותר לכדור הארץ?",
+        "options": ["הירח", "מאדים", "נוגה", "שמש"],
+        "correct_answer": "הירח"
+    },
+    {
+        "question": "כמה חודשים יש בשנה?",
+        "options": ["10", "11", "12", "13"],
+        "correct_answer": "12"
+    },
+    {
+        "question": "מי המציא את נורת החשמל?",
+        "options": ["תומס אדיסון", "אלברט איינשטיין", "ניקולה טסלה", "אלכסנדר גרהם בל"],
+        "correct_answer": "תומס אדיסון"
+    },
+    {
+        "question": "מהי עיר הבירה של צרפת?",
+        "options": ["רומא", "לונדון", "פריז", "ברלין"],
+        "correct_answer": "פריז"
+    },
+    {
+        "question": "איזו חיה נחשבת למלך החיות?",
+        "options": ["אריה", "פיל", "נמר", "דוב"],
+        "correct_answer": "אריה"
+    },
+    {
+        "question": "איזו יבשת היא הקטנה ביותר בשטח?",
+        "options": ["אפריקה", "אסיה", "אוסטרליה", "אירופה"],
+        "correct_answer": "אוסטרליה"
+    },
+    {
+        "question": "איזו חיה היא הגדולה ביותר בעולם?",
+        "options": ["כריש לוויתן", "פיל", "לוויתן כחול", "ג'ירפה"],
+        "correct_answer": "לוויתן כחול"
+    },
+    {
+        "question": "מהו המטבע הרשמי של יפן?",
+        "options": ["דולר", "ין", "אירו", "פאונד"],
+        "correct_answer": "ין"
+    },
+    {
+        "question": "מהי המדינה המזרחית ביותר בעולם?",
+        "options": ["ניו זילנד", "יפן", "אוסטרליה", "סין"],
+        "correct_answer": "ניו זילנד"
+    },
+    {
+        "question": "כמה יבשות יש בעולם?",
+        "options": ["4", "5", "6", "7"],
+        "correct_answer": "7"
+    },
+    {
+        "question": "מהי עיר הבירה של אנגליה?",
+        "options": ["פריז", "מדריד", "לונדון", "ברלין"],
+        "correct_answer": "לונדון"
+    },
+    {
+        "question": "איזו מתכת נמשכת למגנט?",
+        "options": ["ברזל", "כסף", "זהב", "אלומיניום"],
+        "correct_answer": "ברזל"
+    },
+    {
+        "question": "איזה ים הוא המלוח ביותר בעולם?",
+        "options": ["הים התיכון", "הים האדום", "ים המלח", "הים השחור"],
+        "correct_answer": "ים המלח"
     }
 ]
 
 const initialState = {
     gameState: 'init',
-    time: 2,
+    time: 90,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
     score: getBestPlayer(),
     questionData: {},
-    isPressed: false
+    isPressed: false,
+    resetTimeout: 3
 }
-
 
 function shuffleQuestions() {
     for (let i = allQuestionArr.length - 1; i > 0; i--) {
@@ -794,7 +844,8 @@ function getAllByClass(className) {
     return document.querySelectorAll(`.${className}`)
 }
 
-document.addEventListener('keydown', handleKeyDown)
+
+
 
 const bestScoreEl = getById('best-score');
 const bestPlayerEl = getById('best-player');
@@ -808,9 +859,16 @@ const allSquaresEl = getAllByClass('square')
 const allAnswersContainers = getAllByClass('answer-container')
 
 const modal = getById('dialog')
-const modalContainer = getById('dialog-container')
+let modalContainer = getById('dialog-container')
 
 const timer = getById('timer')
+
+document.addEventListener('keypress', initPress)
+function initPress(e) {
+    document.removeEventListener('keypress', initPress)
+    modalContainer.remove()
+    startGame();
+}
 
 function getBestPlayer() {
     let bScore = 0
@@ -835,8 +893,8 @@ function handleKeyDown(e) {
     switch (e.key) {
         case 'a':
             //need to fix btn
-            initialState.gameState === 'init' && startGame()
             initialState.gameState !== 'init' && !initialState.isPressed && checkAnswer(0)
+            initialState.gameState === 'init' && startGame()
             break;
         case 'b':
             initialState.gameState !== 'init' && !initialState.isPressed && checkAnswer(1)
@@ -874,6 +932,7 @@ function checkAnswer(pressedBtnNum) {
 function countDown() {
     let lowerThenTen
     if (initialState.gameState === 'running') {
+
         const timeHandler = setInterval(() => {
             let min = Math.floor(initialState.time / 60)
             let sec = (initialState.time % 60)
@@ -897,29 +956,37 @@ function countDown() {
 
 function endGameModal(text) {
     const modalElement = `
-                    <div id="dialog-container">
+                        <div id="dialog-container">
                         <dialog id="dialog" open>
                         <h3>המשחק נגמר</h3>
-                        <p>הצלחת לענות על ${initialState.corrAnswersCnt} מתוך ${initialState.questionCnt}</p>
-                        <p>${text}</p>
-                        <button id="dialog-btn" onclick="resetGame">שחק שוב</button>
+                        <p class="dialog-p">
+                        ${initialState.questionCnt > 1 ?
+            `הצלחתם לענות על ${initialState.corrAnswersCnt} מתוך ${initialState.questionCnt - 1}`
+            :
+            `הצלחתם לענות על ${initialState.corrAnswersCnt} מתוך ${initialState.questionCnt}`
+        }
+                        </p>
+                        <p class="dialog-p">${text}</p>
+                        <button id="dialog-btn" onclick="initPress"> שחק שוב
+                        <span id="reset-timeout">בעוד ${initialState.resetTimeout}</span> </button>
                         </dialog>
                         </div>
                         `
 
-    document.body.insertAdjacentHTML("beforebegin", modalElement)
+    document.body.insertAdjacentHTML("afterbegin", modalElement)
+    modalContainer = getById("dialog-container")
 }
 
 
 function startGame() {
+    document.addEventListener('keypress', handleKeyDown)
     shuffleQuestions()
     initialState.questionData = getQuestion(initialState.questionCnt)
     showQuestion()
     currPlayerEl.innerText = "ישראל ישראלי"
     currScoreEl.innerText = 0
     initialState.gameState = 'running'
-    modalContainer.remove()
-    setTimeout(() => { countDown() }, 500)
+    countDown()
 
 }
 
@@ -931,15 +998,14 @@ function showQuestion() {
 }
 
 function endGame() {
-    const questionToScore = initialState.questionCnt * 10
-    if (initialState.score === questionToScore) {
-        endGameModal(`מדהים !! הצלחתם לענות על כל השאלות בהצלחה 🤓 (צברתם ${initialState.score} נקודות)`)
+    if ((initialState.corrAnswersCnt === initialState.questionCnt - 1) && initialState.questionCnt > 1) {
+        endGameModal(`מדהים! עניתם על כל השאלות בהצלחה 🤓, צברתם ${initialState.score} נקודות`)
     }
-    if (initialState.score > 0 && initialState.score < (questionToScore / 2)) {
-        endGameModal(`מדהים !! הצלחתם לענות על כל השאלות בהצלחה 🤓 (צברתם ${initialState.score} נקודות)`)
+    if (initialState.corrAnswersCnt > 0 && initialState.corrAnswersCnt < (initialState.questionCnt / 2) + 1) {
+        endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים הצלחתם לצברתם ${initialState.score} נקודות`)
     }
-    if (initialState.score === 0) {
-        endGameModal(`מדהים !! הצלחתם לענות על כל השאלות בהצלחה 🤓 (צברתם ${initialState.score} נקודות)`)
+    if (initialState.corrAnswersCnt === 0) {
+        endGameModal(`לא כל כך מוצלח הא? אולי בפעם הבאה`)
     }
 
     toggleTimeAlert()
@@ -958,10 +1024,23 @@ function endGame() {
             "."
         ],
         "correct_answer": "."
-    },
-        initialState.isPressed = false
+    }
+    initialState.isPressed = false
+
+    document.removeEventListener('keypress', handleKeyDown)
     updateUi([0, 1, 2, 3], false)
 
+    const resetTimeoutEl = getById("reset-timeout")
+    const timeoutBtn = setInterval(() => {
+        if (initialState.resetTimeout === 0) {
+            document.addEventListener('keypress', initPress)
+            clearInterval(timeoutBtn)
+        }
+        if (initialState.resetTimeout > 0) {
+            initialState.resetTimeout--
+        }
+        resetTimeoutEl.innerHTML = initialState.resetTimeout > 0 ? `בעוד ${initialState.resetTimeout}` : ''
+    }, 1000)
 }
 
 function updateUi(pressedNum = [], isCorrect, timeOut = 1000) {
