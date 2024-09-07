@@ -813,7 +813,7 @@ const allQuestionArr = [
 
 const resetState = {
     gameState: 'init',
-    time: 20,
+    time: 90,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
@@ -824,7 +824,7 @@ const resetState = {
 }
 let initialState = {
     gameState: 'init',
-    time: 20,
+    time: 90,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
