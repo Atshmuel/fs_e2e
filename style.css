@@ -25,7 +25,6 @@ header{
 }
 
 main{
-    
     text-align: center;
     margin: 8rem 0;
 }
@@ -114,6 +113,8 @@ footer{
     position: absolute;
 }
 dialog{
+    font-size: 1.5rem;
+
     color: #EEEEEE;
     margin: 0 auto;
     padding: 2rem;
@@ -123,17 +124,17 @@ dialog{
 }
 dialog h3{
     letter-spacing: 4px;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-bottom: 1.4rem;
 }
 dialog > div{
-width: fit-content;
-gap: 2rem;
+    width: fit-content;
+    gap: 2rem;
     margin: 3rem auto;
     display: grid;
     grid-template-columns: repeat(2,1fr);
 }
-    #dialog-btn{
+#dialog-btn{
         border: 1px solid blue;
         border-radius: 10px;
         color: #EEEEEE;
@@ -145,15 +146,15 @@ gap: 2rem;
         padding: 1.4rem 1rem;
         transition: 1s;
 
-    }
-    #dialog-btn:hover{
+}
+#dialog-btn:hover{
         transform: scale(1.1);
         transition: .5s;
-    }
+}
 
-    .dialog-p{
+.dialog-p{
         margin-bottom: 2rem;
-    }
+}
 .btn-icon{
     height: 3rem;
     width: 3rem;
