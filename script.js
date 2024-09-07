@@ -811,9 +811,20 @@ const allQuestionArr = [
     }
 ]
 
-const initialState = {
+const resetState = {
     gameState: 'init',
-    time: 90,
+    time: 20,
+    questionCnt: 1,
+    corrAnswersCnt: 0,
+    name: "",
+    score: getBestPlayer(),
+    questionData: {},
+    isPressed: false,
+    resetTimeout: 3
+}
+let initialState = {
+    gameState: 'init',
+    time: 20,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
@@ -860,10 +871,12 @@ const allAnswersContainers = getAllByClass('answer-container')
 
 const modal = getById('dialog')
 let modalContainer = getById('dialog-container')
+let resetTimeoutEl;
 
 const timer = getById('timer')
 
 document.addEventListener('keypress', initPress)
+
 function initPress(e) {
     document.removeEventListener('keypress', initPress)
     modalContainer.remove()
@@ -910,7 +923,9 @@ function handleKeyDown(e) {
     }
 
 }
+
 function checkAnswer(pressedBtnNum) {
+    let removeFrom;
     let isCorr = false
     initialState.isPressed = true;
     if (initialState.questionData.options[pressedBtnNum] === initialState.questionData.correct_answer) {
@@ -921,14 +936,21 @@ function checkAnswer(pressedBtnNum) {
         allAnswersContainers[pressedBtnNum].classList.add('correct-answer')
     } else {
         allAnswersContainers[pressedBtnNum].classList.add('wrong')
+        allAnswersEl.forEach((el, i) => {
+            if (el.innerHTML === initialState.questionData.correct_answer) {
+                allAnswersContainers[i].classList.add('correct-answer')
+                removeFrom = i
+            }
+        })
     }
     initialState.questionCnt++;
 
     initialState.questionData = getQuestion(initialState.questionCnt)
 
-    updateUi(pressedBtnNum, isCorr)
+    updateUi(pressedBtnNum, isCorr, removeFrom)
 
 }
+
 function countDown() {
     let lowerThenTen
     if (initialState.gameState === 'running') {
@@ -942,7 +964,7 @@ function countDown() {
                 toggleTimeAlert()
                 lowerThenTen = true
             }
-            if (!min && !sec && initialState.gameState !== 'end-game') {
+            if (initialState.time <= 0 && initialState.gameState !== 'end-game') {
                 clearInterval(timeHandler)
                 endGame();
 
@@ -975,8 +997,8 @@ function endGameModal(text) {
 
     document.body.insertAdjacentHTML("afterbegin", modalElement)
     modalContainer = getById("dialog-container")
+    resetTimeoutEl = getById("reset-timeout")
 }
-
 
 function startGame() {
     document.addEventListener('keypress', handleKeyDown)
@@ -990,7 +1012,6 @@ function startGame() {
 
 }
 
-
 function showQuestion() {
     questionNumEl.innerHTML = initialState.questionCnt
     questionEl.innerHTML = initialState.questionData.question
@@ -998,6 +1019,8 @@ function showQuestion() {
 }
 
 function endGame() {
+    document.removeEventListener('keypress', handleKeyDown)
+    toggleTimeAlert()
     if ((initialState.corrAnswersCnt === initialState.questionCnt - 1) && initialState.questionCnt > 1) {
         endGameModal(`מדהים! עניתם על כל השאלות בהצלחה 🤓, צברתם ${initialState.score} נקודות`)
     }
@@ -1008,31 +1031,8 @@ function endGame() {
         endGameModal(`לא כל כך מוצלח הא? אולי בפעם הבאה`)
     }
 
-    toggleTimeAlert()
-    initialState.gameState = 'init'
-    initialState.time = 90
-    initialState.questionCnt = 1
-    initialState.corrAnswersCnt = 0
-    initialState.name = ""
-    initialState.score = getBestPlayer()
-    initialState.questionData = {
-        "question": ".",
-        "options": [
-            ".",
-            ".",
-            ".",
-            "."
-        ],
-        "correct_answer": "."
-    }
-    initialState.isPressed = false
-
-    document.removeEventListener('keypress', handleKeyDown)
-    updateUi([0, 1, 2, 3], false)
-
-    const resetTimeoutEl = getById("reset-timeout")
     const timeoutBtn = setInterval(() => {
-        if (initialState.resetTimeout === 0) {
+        if (initialState.resetTimeout <= 0) {
             document.addEventListener('keypress', initPress)
             clearInterval(timeoutBtn)
         }
@@ -1041,9 +1041,21 @@ function endGame() {
         }
         resetTimeoutEl.innerHTML = initialState.resetTimeout > 0 ? `בעוד ${initialState.resetTimeout}` : ''
     }, 1000)
+
+    initialState = {
+        ...resetState, questionData: {
+            "question": ".",
+            "options": [
+                ".",
+                ".",
+                ".",
+                "."
+            ]
+        }
+    }
 }
 
-function updateUi(pressedNum = [], isCorrect, timeOut = 1000) {
+function updateUi(pressedNum = [], isCorrect, removeFrom, timeOut = 1000) {
     setTimeout(() => {
         initialState.isPressed = false;
         if (isCorrect && !pressedNum.length) {
@@ -1053,6 +1065,8 @@ function updateUi(pressedNum = [], isCorrect, timeOut = 1000) {
         }
         if (!isCorrect && !pressedNum.length) {
             allAnswersContainers[pressedNum].classList.remove('wrong')
+            allAnswersContainers[removeFrom].classList.remove('correct-answer')
+
         }
         if (pressedNum.length) {
             allSquaresEl.forEach(el => el.classList.remove('correct'))
