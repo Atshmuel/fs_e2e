@@ -813,7 +813,7 @@ const allQuestionArr = [
 
 const resetState = {
     gameState: 'init',
-    time: 90,
+    time: 2,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
@@ -824,7 +824,7 @@ const resetState = {
 }
 let initialState = {
     gameState: 'init',
-    time: 90,
+    time: 2,
     questionCnt: 1,
     corrAnswersCnt: 0,
     name: "",
@@ -990,7 +990,7 @@ function endGameModal(text) {
                         </p>
                         <p class="dialog-p">${text}</p>
                         <button id="dialog-btn" onclick="initPress"> שחק שוב
-                        <span id="reset-timeout">בעוד ${initialState.resetTimeout}</span> </button>
+                        <span id="reset-timeout">בעוד 3</span> </button>
                         </dialog>
                         </div>
                         `
@@ -1039,7 +1039,10 @@ function endGame() {
         if (initialState.resetTimeout > 0) {
             initialState.resetTimeout--
         }
-        resetTimeoutEl.innerHTML = initialState.resetTimeout > 0 ? `בעוד ${initialState.resetTimeout}` : ''
+        if (resetTimeoutEl) {
+            resetTimeoutEl.innerHTML = initialState.resetTimeout > 0 ? `בעוד ${initialState.resetTimeout}` : ''
+        }
+
     }, 1000)
 
     initialState = {
