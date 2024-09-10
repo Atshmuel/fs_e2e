@@ -811,24 +811,24 @@ const allQuestionArr = [
     }
 ]
 
-const resetState = {
+let initialState = {
     gameState: 'init',
-    time: 2,
+    time: 90,
     questionCnt: 1,
     corrAnswersCnt: 0,
-    name: "",
-    score: getBestPlayer(),
+    bScore: getLocalStorage('best-score') || 0,
+    score: 0,
     questionData: {},
     isPressed: false,
     resetTimeout: 3
 }
-let initialState = {
+const resetState = {
     gameState: 'init',
-    time: 2,
+    time: 90,
     questionCnt: 1,
     corrAnswersCnt: 0,
-    name: "",
-    score: getBestPlayer(),
+    score: 0,
+    bScore: getLocalStorage('best-score') || 0,
     questionData: {},
     isPressed: false,
     resetTimeout: 3
@@ -857,10 +857,7 @@ function getAllByClass(className) {
 
 
 
-
 const bestScoreEl = getById('best-score');
-const bestPlayerEl = getById('best-player');
-const currPlayerEl = getById('curr-player')
 const currScoreEl = getById('curr-score')
 
 const questionEl = getById('question')
@@ -880,18 +877,8 @@ document.addEventListener('keypress', initPress)
 function initPress(e) {
     document.removeEventListener('keypress', initPress)
     modalContainer.remove()
+    modalContainer = undefined
     startGame();
-}
-
-function getBestPlayer() {
-    let bScore = 0
-    const gamesInfo = getLocalStorage('games-info')
-    if (!gamesInfo) return bScore
-    gamesInfo.map((el) => {
-        bScore = Math.max(bScore, el.score)
-    }
-    )
-    return bScore
 }
 
 function toggleTimeAlert() {
@@ -977,6 +964,9 @@ function countDown() {
 }
 
 function endGameModal(text) {
+    if (modalContainer) return;
+    console.log(initialState);
+
     const modalElement = `
                         <div id="dialog-container">
                         <dialog id="dialog" open>
@@ -988,6 +978,15 @@ function endGameModal(text) {
             `הצלחתם לענות על ${initialState.corrAnswersCnt} מתוך ${initialState.questionCnt}`
         }
                         </p>
+                              ${initialState.score > initialState.bScore ?
+            `
+                            <p class="dialog-p">
+                            פצצה!! הצלחת לשבור את השיא! 👌
+                            </p>
+                            ` : ""
+        }
+
+
                         <p class="dialog-p">${text}</p>
                         <button id="dialog-btn" onclick="initPress"> שחק שוב
                         <span id="reset-timeout">בעוד 3</span> </button>
@@ -1005,8 +1004,8 @@ function startGame() {
     shuffleQuestions()
     initialState.questionData = getQuestion(initialState.questionCnt)
     showQuestion()
-    currPlayerEl.innerText = "ישראל ישראלי"
-    currScoreEl.innerText = 0
+    currScoreEl.innerText = initialState.score
+    bestScoreEl.innerText = initialState.bScore
     initialState.gameState = 'running'
     countDown()
 
@@ -1021,16 +1020,38 @@ function showQuestion() {
 function endGame() {
     document.removeEventListener('keypress', handleKeyDown)
     toggleTimeAlert()
+
+    if (initialState.score > initialState.bScore)
+        setLocalStorage('best-score', initialState.score)
+
     if ((initialState.corrAnswersCnt === initialState.questionCnt - 1) && initialState.questionCnt > 1) {
         endGameModal(`מדהים! עניתם על כל השאלות בהצלחה 🤓, צברתם ${initialState.score} נקודות`)
     }
-    if (initialState.corrAnswersCnt > 0 && initialState.corrAnswersCnt < (initialState.questionCnt / 2) + 1) {
-        endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים הצלחתם לצברתם ${initialState.score} נקודות`)
-    }
-    if (initialState.corrAnswersCnt === 0) {
-        endGameModal(`לא כל כך מוצלח הא? אולי בפעם הבאה`)
+
+    if (initialState.corrAnswersCnt > 0 && initialState.corrAnswersCnt < 8) {
+        endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצברתם ${initialState.score} נקודות`)
     }
 
+    if (initialState.questionCnt >= 8) {
+        if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt * 0.75))
+            && (initialState.corrAnswersCnt != initialState.questionCnt - 1)) {
+            endGameModal(`כל הכבוד! אתם ממש טובים בטריוויה 😀, הצלחתם לצברתם ${initialState.score} נקודות`)
+        }
+        if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt / 2))
+            && (initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt * 0.75) + 1)) {
+            endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצברתם ${initialState.score} נקודות`)
+        }
+        if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt * 0.25))
+            && (initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt / 2) + 1)) {
+            endGameModal(`לא רע, אבל אפשר עוד להשתפר 🙂, הצלחתם לצברתם ${initialState.score} נקודות`)
+        }
+        if ((initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt * 0.25))) {
+            endGameModal(`נראה שאתם פחות בקטע של טריוויה 🤔, הצלחתם לצברתם ${initialState.score} נקודות`)
+        }
+    }
+    if (initialState.corrAnswersCnt === 0) {
+        endGameModal(`לא נורא, אולי עדיף שתשחקו ברולטה של אבי, אדווה ואיתי`)
+    }
     const timeoutBtn = setInterval(() => {
         if (initialState.resetTimeout <= 0) {
             document.addEventListener('keypress', initPress)
@@ -1054,7 +1075,7 @@ function endGame() {
                 ".",
                 "."
             ]
-        }
+        }, bScore: getLocalStorage('best-score')
     }
 }
 
@@ -1077,7 +1098,7 @@ function updateUi(pressedNum = [], isCorrect, removeFrom, timeOut = 1000) {
                 el.classList.remove('correct-answer')
                 el.classList.remove('wrong')
             })
-            timer.innerHTML = '01:30'
+            timer.innerHTML = '01:00'
         }
         showQuestion()
     }, timeOut)
