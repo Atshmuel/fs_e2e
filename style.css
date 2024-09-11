@@ -88,8 +88,6 @@ main{
 
 footer{
     margin-top: 5rem;
-    text-align: center;
-    font-size: 1.7rem;
 }
 
 #timer{
@@ -173,6 +171,26 @@ dialog > div{
     background-color: rgb(179, 182, 15);
 }
 
+#bar{
+    height: 2.5rem;
+    width: 50%;
+    border: 1px solid #0bc4ce;
+    border-radius: 40px;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: end;
+    overflow: hidden;
+}
+
+#progress{
+    height: inherit;
+    border-radius: inherit;
+    background-color: #0bc4ce;
+    width: 100% ;
+}
+
+
+
 @media only screen and (max-width: 1395px) {
     main{
         margin-top: 7rem;
@@ -239,15 +257,12 @@ footer{
 
 @keyframes bounce {
     0%{
-        font-size: 1.7rem;
-        color:#0bc4ce;
+        background-color:#0bc4ce;
     }
     50%{
-        font-size: 1.8rem;
-        color:#ce0b0b;
+          background-color:#ce0b0b;
     }
     100%{
-        font-size: 1.7rem;
-        color:#0bc4ce;
+        background-color:#0bc4ce;
     }
 }
