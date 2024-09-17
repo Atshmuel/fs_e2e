@@ -657,7 +657,6 @@ function getQuestion(num) {
 function handleKeyDown(e) {
     switch (e.key) {
         case 'a':
-            //need to fix btn
             initialState.gameState !== 'init' && !initialState.isPressed && checkAnswer(0)
             initialState.gameState === 'init' && startGame()
             break;
@@ -687,6 +686,7 @@ function checkAnswer(pressedBtnNum) {
         allSquaresEl[pressedBtnNum].classList.add('correct')
         allAnswersContainers[pressedBtnNum].classList.add('correct-answer')
     } else {
+        if (initialState.score > 0) initialState.score -= 5
         allAnswersContainers[pressedBtnNum].classList.add('wrong')
         allAnswersEl.forEach((el, i) => {
             if (el.innerHTML === initialState.questionData.correct_answer) {
@@ -746,11 +746,11 @@ function endGameModal(text) {
 
 
                         <p class="dialog-p">${text}</p>
-                        <button id="dialog-btn" onclick="initPress"> שחק שוב
+                        <button id="dialog-btn" onclick="initPress">לחץ על כפתור להתחלת משחק חדש
                         <span id="reset-timeout">בעוד 3</span> </button>
                         </dialog>
                         </div>
-                        `
+                        `//שיניתי
 
     document.body.insertAdjacentHTML("afterbegin", modalElement)
     modalContainer = getById("dialog-container")
@@ -787,24 +787,24 @@ function endGame() {
     }
 
     if (initialState.corrAnswersCnt > 0 && initialState.corrAnswersCnt < 8) {
-        endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצברתם ${initialState.score} נקודות`)
+        endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצבור ${initialState.score} נקודות`)
     }
 
     if (initialState.questionCnt >= 8) {
         if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt * 0.75))
             && (initialState.corrAnswersCnt != initialState.questionCnt - 1)) {
-            endGameModal(`כל הכבוד! אתם ממש טובים בטריוויה 😀, הצלחתם לצברתם ${initialState.score} נקודות`)
+            endGameModal(`כל הכבוד! אתם ממש טובים בטריוויה 😀, הצלחתם לצבור ${initialState.score} נקודות`)
         }
         if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt / 2))
             && (initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt * 0.75) + 1)) {
-            endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצברתם ${initialState.score} נקודות`)
+            endGameModal(`נחמד מאוד, הידע הכללי שלכם מרשים 😉, הצלחתם לצבור ${initialState.score} נקודות`)
         }
         if ((initialState.corrAnswersCnt > Math.ceil(initialState.questionCnt * 0.25))
             && (initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt / 2) + 1)) {
-            endGameModal(`לא רע, אבל אפשר עוד להשתפר 🙂, הצלחתם לצברתם ${initialState.score} נקודות`)
+            endGameModal(`לא רע, אבל אפשר עוד להשתפר 🙂, הצלחתם לצבור ${initialState.score} נקודות`)
         }
         if ((initialState.corrAnswersCnt <= Math.ceil(initialState.questionCnt * 0.25))) {
-            endGameModal(`נראה שאתם פחות בקטע של טריוויה 🤔, הצלחתם לצברתם ${initialState.score} נקודות`)
+            endGameModal(`נראה שאתם פחות בקטע של טריוויה 🤔, הצלחתם לצבור ${initialState.score} נקודות`)
         }
     }
     if (initialState.corrAnswersCnt === 0) {
@@ -843,7 +843,6 @@ function updateUi(pressedNum = [], isCorrect, removeFrom, timeOut = 1000) {
         if (isCorrect && !pressedNum.length) {
             allSquaresEl[pressedNum].classList.remove('correct');
             allAnswersContainers[pressedNum].classList.remove('correct-answer')
-            currScoreEl.innerHTML = initialState.score;
         }
         if (!isCorrect && !pressedNum.length) {
             allAnswersContainers[pressedNum].classList.remove('wrong')
@@ -858,6 +857,7 @@ function updateUi(pressedNum = [], isCorrect, removeFrom, timeOut = 1000) {
             })
             progress.style.width = '100%'
         }
+        currScoreEl.innerHTML = initialState.score;
         showQuestion()
     }, timeOut)
 
